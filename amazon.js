@@ -81,6 +81,41 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   });
 });
 
-// Initialize cart quantity on load
+// amazon.js
+
+// Load cart from localStorage or start empty
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Add to cart buttons
+document.querySelectorAll('.add-to-cart-button').forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const productElement = button.closest('.product-container');
+    const name = productElement.querySelector('.product-name').innerText;
+    const price = parseFloat(productElement.querySelector('.product-price').innerText.replace('$', ''));
+    const image = productElement.querySelector('.product-image').src;
+    const quantity = parseInt(productElement.querySelector('select').value);
+
+    // Check if product exists
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({ name, price, image, quantity });
+    }
+
+    // Save cart
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update header cart quantity
+    updateCartQuantity();
+  });
+});
+
+function updateCartQuantity() {
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.querySelector('.cart-quantity').innerText = totalQuantity;
+}
+
+// Run once on page load
 updateCartQuantity();
 
