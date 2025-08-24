@@ -1,4 +1,6 @@
 // checkout.js
+import { products } from "./data/products.js";
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function renderCart() {
@@ -12,12 +14,15 @@ function renderCart() {
   }
 
   cart.forEach((item, index) => {
+    const product = products.find(p => p.id === item.productId);
+    if (!product) return; // skip if product not found
+
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('checkout-item');
     itemDiv.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" width="50">
-      <span>${item.name}</span>
-      <span>$${item.price.toFixed(2)}</span>
+      <img src="${product.image}" alt="${product.name}" width="50">
+      <span>${product.name}</span>
+      <span>$${(product.priceCents / 100).toFixed(2)}</span>
       <input type="number" value="${item.quantity}" min="1" class="update-qty" data-index="${index}">
       <button class="delete-item" data-index="${index}">Delete</button>
     `;
@@ -32,7 +37,7 @@ function attachEvents() {
   document.querySelectorAll('.update-qty').forEach(input => {
     input.addEventListener('change', e => {
       const index = e.target.dataset.index;
-      cart[index].quantity = parseInt(e.target.value);
+      cart[index].quantity = parseInt(e.target.value, 10);
       saveCart();
       renderCart();
     });
@@ -49,7 +54,11 @@ function attachEvents() {
 }
 
 function updateTotal() {
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = cart.reduce((sum, item) => {
+    const product = products.find(p => p.id === item.productId);
+    return product ? sum + (product.priceCents / 100) * item.quantity : sum;
+  }, 0);
+
   document.querySelector('.cart-total').innerText = `$${total.toFixed(2)}`;
 }
 

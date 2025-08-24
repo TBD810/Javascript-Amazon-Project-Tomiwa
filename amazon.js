@@ -1,6 +1,6 @@
 import { cart, addToCart } from "./data/cart.js";
 import { products } from "./data/products.js";
-import { formatCurrency } from "./utils/money.js";
+import formatCurrency from "./utils/money.js";
 
 // Select the container
 const productsGrid = document.querySelector(".js-products-grid");
@@ -20,7 +20,7 @@ products.forEach((product) => {
     <div class="product-name limit-text-to-2-lines"></div>
 
     <div class="product-rating-container">
-      <img class="product-rating-stars" src="${product.rating.stars}" alt="Rating">
+      <img class="product-rating-stars" src="images/ratings/rating-${product.rating.stars}.png" alt="rating">
       <div class="product-rating-count link-primary"></div>
     </div>
 

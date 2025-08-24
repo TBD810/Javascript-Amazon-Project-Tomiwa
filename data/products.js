@@ -19,7 +19,7 @@ export const products = [
     image: "images/products/intermediate-composite-basketball.jpg",
     name: "Intermediate Size Basketball",
     rating: {
-      stars: 4,
+      stars: 4.0,
       count: 127
     },
     priceCents: 2095,
@@ -36,7 +36,7 @@ export const products = [
       stars: 4.5,
       count: 56
     },
-
+     priceCents: 2299,
     keywords: [
       "tshirts",
       "apparel",
