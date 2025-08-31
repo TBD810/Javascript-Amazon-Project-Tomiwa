@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PowerTrack NG</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ PowerTrack NG</h1>
+
+    <label for="location">Select your area:</label>
+    <select id="location">
+      <option value="">--Choose Area--</option>
+      <option value="Yaba">Yaba</option>
+      <option value="Ikeja">Ikeja</option>
+      <option value="Surulere">Surulere</option>
+      <option value="Lekki">Lekki</option>
+    </select>
+
+    <div class="buttons">
+      <button onclick="reportStatus('ON')">🔆 Power is ON</button>
+      <button onclick="reportStatus('OFF')">🌑 Power is OFF</button>
+    </div>
+
+    <h2>Recent Reports</h2>
+    <ul id="report-list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
